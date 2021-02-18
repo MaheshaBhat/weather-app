@@ -1,0 +1,147 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2020": true
+  },
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "@react-native-community"
+  ],
+  "plugins": ["react", "react-hooks"],
+  // add your custom rules here
+  "rules": {
+    "semi": 2,
+    "eol-last": "error",
+    "comma-dangle": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "no-console": "warn",
+    "no-var": "error",
+    //"no-use-before-define": ["warn", { "functions": false, "classes": true }],
+    // "no-unused-vars": [
+    //   "error",
+    //   {
+    //     "vars": "all",
+    //     "args": "all",
+    //     "ignoreRestSiblings": false,
+    //     "caughtErrors": "all"
+    //   }
+    // ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": false,
+        "optionalDependencies": false,
+        "peerDependencies": false,
+        "bundledDependencies": false
+      }
+    ],
+    "react/button-has-type": "error",
+    "react/default-props-match-prop-types": "error",
+    "react/destructuring-assignment": [2, "always"],
+    "react/no-array-index-key": "error",
+    "react/no-danger-with-children": "error",
+    "react/no-deprecated": "error",
+    "react/no-find-dom-node": "error",
+    "react/no-is-mounted": "error",
+    "react/no-this-in-sfc": "error",
+    "react/no-typos": "error",
+    "react/no-unescaped-entities": "error",
+    "react/no-unused-prop-types": [2],
+    "react/prop-types": [2],
+    "react/require-default-props": [0],
+    "react/self-closing-comp": "error",
+    "react/style-prop-object": [2],
+    "react/void-dom-elements-no-children": "error",
+    "react/jsx-child-element-spacing": "error",
+    "react/jsx-closing-bracket-location": [2, "tag-aligned"],
+    "react/jsx-closing-tag-location": "error",
+    "react/jsx-curly-brace-presence": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "jsx-quotes": ["error", "prefer-double"],
+    //"quotes": ["error", "single", { "avoidEscape": true }],
+    "consistent-return": "off",
+    "import/no-unresolved": [2, { "ignore": ["^@"] }],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [
+      0,
+      { "extensions": [".js", ".jsx", ".tsx", ".ts"] }
+    ],
+    "prettier/prettier": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        "native.js": "never"
+      }
+    ],
+    "react-native/no-inline-styles": 0,
+    "react/jsx-props-no-spreading": [
+      0,
+      {
+        "html": "ignore",
+        "custom": "ignore",
+        "explicitSpread": "ignore"
+      }
+    ],
+    "import/prefer-default-export": 0,
+    //"eslintreact/destructuring-assignment": 0,
+    "global-require": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".native.js"]
+      }
+    },
+    "react": {
+      "createClass": "createReactClass", // Regex for Component Factory to use,
+      // default to "createReactClass"
+      "pragma": "React", // Pragma to use, default to "React"
+      "version": "detect", // React version. "detect" automatically picks the version you have installed.
+      // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
+      // default to latest and warns if missing
+      // It will default to "detect" in the future
+      "flowVersion": "0.53" // Flow version
+    },
+    "propWrapperFunctions": [
+      // The names of any function used to wrap propTypes, e.g. `forbidExtraProps`. If this isn't set, any propTypes wrapped in a function will be skipped.
+      "forbidExtraProps",
+      {
+        "property": "freeze",
+        "object": "Object"
+      },
+      {
+        "property": "myFavoriteWrapper"
+      }
+    ],
+    "linkComponents": [
+      // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
+      "Hyperlink",
+      {
+        "name": "Link",
+        "linkAttribute": "to"
+      }
+    ]
+  }
+}
