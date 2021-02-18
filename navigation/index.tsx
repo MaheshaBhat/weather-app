@@ -6,6 +6,7 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -29,14 +30,23 @@ export default function Navigation({
   );
 }
 
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
-const Stack = createStackNavigator<RootStackParamList>();
 
+const Tab = createMaterialBottomTabNavigator();
 function RootNavigator() {
   return (
+    <Tab.Navigator>
+      <Tab.Screen name="Root" component={TabNavigator} />
+    </Tab.Navigator>
+  );
+}
+
+// A root stack navigator is often used for displaying modals on top of all other content
+const Stack = createStackNavigator<RootStackParamList>();
+
+function TabNavigator() {
+  return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="Tab" component={BottomTabNavigator} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
