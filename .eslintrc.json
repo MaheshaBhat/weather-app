@@ -30,6 +30,7 @@
     "react-hooks/exhaustive-deps": "error",
     "no-console": "warn",
     "no-var": "error",
+    "quotes":"off",
     //"no-use-before-define": ["warn", { "functions": false, "classes": true }],
     // "no-unused-vars": [
     //   "error",

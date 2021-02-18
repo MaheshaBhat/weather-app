@@ -1,20 +1,20 @@
 /* eslint-disable react/prop-types */
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import HomeScreen from '../screens/HomeScreen';
-import NewsLetterScreen from '../screens/NewsLetterScreen';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import HomeScreen from "../screens/HomeScreen";
+import NewsLetterScreen from "../screens/NewsLetterScreen";
 import {
   BottomTabParamList,
   HomeParamList,
   NewsLetterParamList,
-} from '../types';
+} from "../types";
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -22,18 +22,20 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      barStyle={{ backgroundColor: Colors.light.primaryColor }}
+      activeColor="#fff"
+      inactiveColor="#ffffff80"
     >
       <BottomTab.Screen
         name="Home"
-        component={TabOneNavigator}
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="NewsLetter"
-        component={TabTwoNavigator}
+        component={NewsLetterNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="newspaper" color={color} />
@@ -44,41 +46,37 @@ export default function BottomTabNavigator() {
   );
 }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof Ionicons>['name'];
+  name: React.ComponentProps<typeof Ionicons>["name"];
   color: string;
 }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <Ionicons size={20} style={{ marginBottom: -3 }} {...props} />;
 }
 
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<HomeParamList>();
+const HomeStack = createStackNavigator<HomeParamList>();
 
-function TabOneNavigator() {
+function HomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
+    <HomeStack.Navigator>
+      <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerShown: false }}
       />
-    </TabOneStack.Navigator>
+    </HomeStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<NewsLetterParamList>();
+const NewsLetterStack = createStackNavigator<NewsLetterParamList>();
 
-function TabTwoNavigator() {
+function NewsLetterNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
+    <NewsLetterStack.Navigator>
+      <NewsLetterStack.Screen
         name="NewsLetterScreen"
         component={NewsLetterScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerShown: false }}
       />
-    </TabTwoStack.Navigator>
+    </NewsLetterStack.Navigator>
   );
 }

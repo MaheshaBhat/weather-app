@@ -2,19 +2,25 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
-} from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+  DrawerActions,
+  useNavigation,
+} from "@react-navigation/native";
+import {
+  createStackNavigator,
+  StackHeaderLeftButtonProps,
+} from "@react-navigation/stack";
+import * as React from "react";
+import { ColorSchemeName, TouchableOpacity } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Ionicons } from "@expo/vector-icons";
 
-import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
-import LinkingConfiguration from './LinkingConfiguration';
+import NotFoundScreen from "../screens/NotFoundScreen";
+import { RootStackParamList } from "../types";
+import BottomTabNavigator from "./BottomTabNavigator";
+import LinkingConfiguration from "./LinkingConfiguration";
+import Colors from "../constants/Colors";
+import DrawerContent from '../components/DrawerContent';
 
-// If you are not familiar with React Navigation, we recommend going through the
-// "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({
   colorScheme,
 }: {
@@ -23,35 +29,61 @@ export default function Navigation({
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      <TabNavigator />
     </NavigationContainer>
   );
 }
 
-
-const Tab = createMaterialBottomTabNavigator();
-function RootNavigator() {
+const HeaderLeft = (props: StackHeaderLeftButtonProps) => {
+  const navigation = useNavigation();
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Root" component={TabNavigator} />
-    </Tab.Navigator>
+    <TouchableOpacity
+      onPress={() => navigation.dispatch(DrawerActions.toggleDrawer)}
+    >
+      <Ionicons
+        name="menu"
+        size={30}
+        color={'#009688'}
+        style={{ paddingLeft: 20 }}
+      />
+    </TouchableOpacity>
   );
-}
+};
 
 // A root stack navigator is often used for displaying modals on top of all other content
 const Stack = createStackNavigator<RootStackParamList>();
 
 function TabNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Tab" component={BottomTabNavigator} />
+    <Stack.Navigator
+      screenOptions={{
+        headerLeft: (props) => <HeaderLeft {...props} />,
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: Colors.light.primaryColor,
+        },
+        headerTitle: "Weather App",
+        headerTitleStyle: { color: "white" },
+      }}
+    >
+      <Stack.Screen name="Tab" component={RootDrawer} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: 'Oops!' }}
+        options={{ title: "Oops!", headerShown: false }}
       />
     </Stack.Navigator>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+function RootDrawer() {
+  return (
+    <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+      <Drawer.Screen name="Root" component={BottomTabNavigator} />
+    </Drawer.Navigator>
   );
 }
