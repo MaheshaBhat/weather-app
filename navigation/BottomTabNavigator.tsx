@@ -2,10 +2,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useTheme } from "@react-navigation/native";
 import * as React from "react";
 
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
+import Colors, { colorType } from "../constants/Colors";
 import HomeScreen from "../screens/HomeScreen";
 import NewsLetterScreen from "../screens/NewsLetterScreen";
 import {
@@ -17,12 +17,12 @@ import {
 const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme() as colorType;
 
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      barStyle={{ backgroundColor: Colors.light.primaryColor }}
+      barStyle={{ backgroundColor: theme.colors.primaryColor }}
       activeColor="#fff"
       inactiveColor="#ffffff80"
     >

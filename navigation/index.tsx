@@ -1,9 +1,9 @@
+import { useContext } from "react";
 import {
   NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
   DrawerActions,
   useNavigation,
+  useTheme,
 } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -18,19 +18,14 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
-import Colors from "../constants/Colors";
-import DrawerContent from '../components/DrawerContent';
+import Colors, { colorType } from "../constants/Colors";
+import DrawerContent from "../components/DrawerContent";
+import { AppContext, contextType } from "../context";
 
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) {
+export default function Navigation() {
+  const { theme } = useContext<contextType>(AppContext);
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
+    <NavigationContainer linking={LinkingConfiguration} theme={theme}>
       <TabNavigator />
     </NavigationContainer>
   );
@@ -45,7 +40,7 @@ const HeaderLeft = (props: StackHeaderLeftButtonProps) => {
       <Ionicons
         name="menu"
         size={30}
-        color={'#009688'}
+        color={"#009688"}
         style={{ paddingLeft: 20 }}
       />
     </TouchableOpacity>
@@ -56,13 +51,14 @@ const HeaderLeft = (props: StackHeaderLeftButtonProps) => {
 const Stack = createStackNavigator<RootStackParamList>();
 
 function TabNavigator() {
+  const theme = useTheme() as colorType;
   return (
     <Stack.Navigator
       screenOptions={{
         headerLeft: (props) => <HeaderLeft {...props} />,
         headerShown: true,
         headerStyle: {
-          backgroundColor: Colors.light.primaryColor,
+          backgroundColor: theme.colors.primaryColor,
         },
         headerTitle: "Weather App",
         headerTitleStyle: { color: "white" },
