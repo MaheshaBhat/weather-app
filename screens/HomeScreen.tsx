@@ -40,7 +40,6 @@ const months = [
   "Dec",
 ];
 
-
 const getDate = (date: Date) =>
   `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 
@@ -124,21 +123,16 @@ export default function TabOneScreen() {
       }
     >
       <View style={styles.headerContainer}>
-        <View style={styles.vc} />
         <View style={styles.userNameContainer}>
           <Text style={styles.dateStyle}>{getDate(dateRef.current)}</Text>
           <Text style={styles.userNameStyle}>{userName.split("@")[0]}</Text>
         </View>
-        <View style={styles.vc} />
         <View style={styles.imageContainer}>
-          <DP color={ theme.colors.primaryColor} disabled image={image} />
+          <DP color={theme.colors.primaryColor} disabled image={image} />
         </View>
-        <View style={styles.vc} />
       </View>
       <View style={styles.subContainer}>
-        <View style={styles.vc} />
         <View style={styles.colContainer}>
-          <View style={styles.hr} />
           <Card
             cardStyle={styles.shortCardStyle}
             obj={weatherData[0]}
@@ -146,7 +140,6 @@ export default function TabOneScreen() {
             value={weather.humidity}
             min={min}
           />
-          <View style={styles.hr} />
           <Card
             cardStyle={styles.longCardStyle}
             obj={weatherData[1]}
@@ -154,11 +147,8 @@ export default function TabOneScreen() {
             value={weather.uvIndex}
             min={min}
           />
-          <View style={styles.hr} />
         </View>
-        <View style={styles.vc} />
         <View style={styles.colContainer}>
-          <View style={styles.hr} />
           <Card
             cardStyle={styles.longCardStyle}
             obj={weatherData[3]}
@@ -166,7 +156,6 @@ export default function TabOneScreen() {
             value={weather.pressure}
             min={min}
           />
-          <View style={styles.hr} />
           <Card
             cardStyle={styles.shortCardStyle}
             obj={weatherData[2]}
@@ -174,9 +163,7 @@ export default function TabOneScreen() {
             value={weather.visibility}
             min={min}
           />
-          <View style={styles.hr} />
         </View>
-        <View style={styles.vc} />
       </View>
     </ScrollView>
   );
@@ -189,28 +176,29 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerContainer: {
-    flex: 10,
+    flex: 15,
     flexDirection: "row",
+    marginHorizontal: "5%",
+    marginVertical: '1%'
   },
   subContainer: {
-    flex: 80,
+    flex: 85,
     flexDirection: "row",
+    marginHorizontal: "2.5%",
   },
   colContainer: {
     flex: 44,
     justifyContent: "space-between",
+    marginHorizontal: "2.5%",
+    marginBottom: "2.5%",
   },
   shortCardStyle: {
     flex: 34,
+    marginVertical: "5%",
   },
   longCardStyle: {
     flex: 54,
-  },
-  hr: {
-    flex: 4,
-  },
-  vc: {
-    flex: 4,
+    marginVertical: "5%",
   },
   userNameContainer: {
     flex: 64,

@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff90",
     paddingHorizontal: "4%",
     paddingVertical: "2%",
+    width: '100%'
   },
   title: {
     fontSize: 15,
