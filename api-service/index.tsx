@@ -1,9 +1,6 @@
 import { LocationObject } from "expo-location";
 import * as SecureStore from "expo-secure-store";
-
-const API_KEY = "dc2a1efdcb6e331c3e5a38071470d8eb";
-
-const FEED_API_KEY = "841ea28d3a9d46dcbcd0fea12a0f4590";
+import {API_KEY, FEED_API_KEY} from "@env";
 
 export const getWeatherData = ({ coords }: LocationObject) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.latitude}&lon=${coords.longitude}&appid=${API_KEY}`;
