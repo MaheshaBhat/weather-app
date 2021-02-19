@@ -8,6 +8,7 @@ import {
 import {
   createStackNavigator,
   StackHeaderLeftButtonProps,
+  HeaderBackButton,
 } from "@react-navigation/stack";
 import * as React from "react";
 import { ColorSchemeName, TouchableOpacity } from "react-native";
@@ -21,6 +22,8 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import Colors, { colorType } from "../constants/Colors";
 import DrawerContent from "../components/DrawerContent";
 import { AppContext, contextType } from "../context";
+import BrowseScreen from "../screens/BrowseScreen";
+import { normalize } from "../constants/Layout";
 
 export default function Navigation() {
   const { theme } = useContext<contextType>(AppContext);
@@ -39,7 +42,7 @@ const HeaderLeft = (props: StackHeaderLeftButtonProps) => {
     >
       <Ionicons
         name="menu"
-        size={30}
+        size={normalize(30)}
         color={"#009688"}
         style={{ paddingLeft: 20 }}
       />
@@ -61,10 +64,15 @@ function TabNavigator() {
           backgroundColor: theme.colors.primaryColor,
         },
         headerTitle: "Weather App",
-        headerTitleStyle: { color: "white" },
+        headerTitleStyle: { color: "white", fontFamily: "space-mano-bold" },
       }}
     >
       <Stack.Screen name="Tab" component={RootDrawer} />
+      <Stack.Screen
+        name="Browse"
+        component={BrowseScreen}
+        options={{ headerLeft: HeaderBackButton }}
+      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

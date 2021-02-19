@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import Line from "../Line";
 import { View, Text } from "../Themed";
+import CardContainer from "../CardContainer";
 
 const humidity = require("../../assets/images/humidity.png");
 const uvIndex = require("../../assets/images/uvIndex.png");
@@ -26,42 +27,37 @@ interface Props {
 }
 export default function Card({ cardStyle, obj, value, min }: Props) {
   return (
-    <View style={[styles.container, cardStyle]}>
-      <LinearGradient
-        colors={[obj.color, `${obj.color}80`]}
-        style={{ flex: 1, flexDirection: "row", zIndex: 10 }}
-      >
-        <View style={styles.linearStyle}>
-          <View style={styles.dataContainer}>
-            <Image
-              source={icons[obj.index]}
-              resizeMode="center"
-              style={{
-                height: 30,
-                width: obj.index === 3 ? 25 : 30,
-                marginBottom: "5%",
-              }}
-            />
-            <Text style={[styles.textStyle, { fontWeight: "bold" }]}>
-              {obj.name}
-            </Text>
-          </View>
-          {obj.index % 2 !== 0 && (
-            <View style={styles.lineContainer}>
-              <Line />
-            </View>
-          )}
-          <View style={styles.dataContainer}>
-            <Text
-              style={[styles.textStyle, { fontSize: 32, fontWeight: "bold" }]}
-            >
-              {value}
-            </Text>
-            <Text style={styles.textStyle}>{`${min} minutes ago`}</Text>
-          </View>
+    <CardContainer cardStyle={cardStyle} color={obj.color}>
+      <View style={styles.linearStyle}>
+        <View style={styles.dataContainer}>
+          <Image
+            source={icons[obj.index]}
+            resizeMode="center"
+            style={{
+              height: 30,
+              width: obj.index === 3 ? 25 : 30,
+              marginBottom: "5%",
+            }}
+          />
+          <Text style={[styles.textStyle, { fontWeight: "bold" }]}>
+            {obj.name}
+          </Text>
         </View>
-      </LinearGradient>
-    </View>
+        {obj.index % 2 !== 0 && (
+          <View style={styles.lineContainer}>
+            <Line />
+          </View>
+        )}
+        <View style={styles.dataContainer}>
+          <Text
+            style={[styles.textStyle, { fontSize: 32, fontFamily: "space-mano-bold" }]}
+          >
+            {value}
+          </Text>
+          <Text style={styles.textStyle}>{`${min} minutes ago`}</Text>
+        </View>
+      </View>
+    </CardContainer>
   );
 }
 

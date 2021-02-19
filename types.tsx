@@ -1,5 +1,6 @@
 export type RootStackParamList = {
   Tab: undefined;
+  Browse: undefined;
   NotFound: undefined;
 };
 

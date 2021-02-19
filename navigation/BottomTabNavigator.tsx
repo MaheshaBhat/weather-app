@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Ionicons } from "@expo/vector-icons";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useTheme } from "@react-navigation/native";
 import * as React from "react";
@@ -13,8 +13,9 @@ import {
   HomeParamList,
   NewsLetterParamList,
 } from "../types";
+import { normalize } from "../constants/Layout";
 
-const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const theme = useTheme() as colorType;
@@ -22,9 +23,12 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      barStyle={{ backgroundColor: theme.colors.primaryColor }}
-      activeColor="#fff"
-      inactiveColor="#ffffff80"
+      tabBarOptions={{
+        activeBackgroundColor: theme.colors.primaryColor,
+        inactiveBackgroundColor: theme.colors.primaryColor + 80,
+        activeTintColor: theme.colors.background,
+        inactiveTintColor: theme.colors.background,
+      }}
     >
       <BottomTab.Screen
         name="Home"
@@ -50,7 +54,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>["name"];
   color: string;
 }) {
-  return <Ionicons size={20} style={{ marginBottom: -3 }} {...props} />;
+  return <Ionicons size={normalize(20)} style={{ marginBottom: -3 }} {...props} />;
 }
 
 const HomeStack = createStackNavigator<HomeParamList>();

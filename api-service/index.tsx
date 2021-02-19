@@ -1,4 +1,5 @@
 import { LocationObject } from "expo-location";
+import * as SecureStore from "expo-secure-store";
 
 const API_KEY = "dc2a1efdcb6e331c3e5a38071470d8eb";
 
@@ -34,7 +35,7 @@ export const getUVData = ({ coords }: LocationObject) => {
 };
 
 export const getFeeds = () => {
-  const url = `'http://newsapi.org/v2/top-headlines?country=in&apiKey=${FEED_API_KEY}`;
+  const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${FEED_API_KEY}`;
   return fetch(url)
     .then((d) => d.json())
     .then((res) => {
@@ -45,4 +46,11 @@ export const getFeeds = () => {
     });
 };
 
-;
+export async function save(key: string, value: string) {
+  await SecureStore.setItemAsync(key, value);
+}
+
+export async function getValueFor(key: string) {
+  const result = await SecureStore.getItemAsync(key);
+  return result;
+}

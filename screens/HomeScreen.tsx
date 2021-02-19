@@ -10,16 +10,14 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import * as Location from "expo-location";
-import { Ionicons } from "@expo/vector-icons";
 
 import { Text, View } from "../components/Themed";
 import Card from "../components/Card";
 import { AppContext, contextType } from "../context";
-import layout from "../constants/Layout";
 import { getUVData, getWeatherData } from "../api-service";
+import DP from "../components/DP";
 
 const weatherData = [
   { name: "Humidity", index: 0, type: "humidity", color: "#6b29ff" },
@@ -42,12 +40,9 @@ const months = [
   "Dec",
 ];
 
-const visibility = require("../assets/images/visibility.png");
 
 const getDate = (date: Date) =>
   `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-
-const imageWidth = layout.window.width * 0.168;
 
 interface Weather {
   humidity: number;
@@ -56,7 +51,7 @@ interface Weather {
   visibility: number;
 }
 export default function TabOneScreen() {
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(true);
   // const [location, setLocation] = useState<Location.LocationObject>();
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [permission, setPermission] = useState(false);
@@ -68,7 +63,7 @@ export default function TabOneScreen() {
     visibility: 0,
   });
   const { userName, image, theme } = useContext<contextType>(AppContext);
-  console.log(image);
+  // console.log(image);
   const dateRef = useRef<Date>(new Date());
 
   useEffect(() => {
@@ -85,6 +80,7 @@ export default function TabOneScreen() {
 
   useEffect(() => {
     (async () => {
+      if (!refreshing) return;
       setPermission(false);
       setErrorMsg("");
       const { status } = await Location.requestPermissionsAsync();
@@ -101,7 +97,10 @@ export default function TabOneScreen() {
           setWeather({ ...res[0], uvIndex: res[1] });
           setMin(0);
         })
-        .catch((err) => setErrorMsg(err.toString()));
+        .catch((err) => {
+          setRefreshing(false);
+          setErrorMsg(err.toString());
+        });
     })();
   }, [refreshing, permission]);
 
@@ -132,27 +131,7 @@ export default function TabOneScreen() {
         </View>
         <View style={styles.vc} />
         <View style={styles.imageContainer}>
-          <View style={styles.image}>
-            {!image ? (
-              <Ionicons
-                name="person-circle-outline"
-                size={imageWidth}
-                color={theme.colors.primaryColor}
-              />
-            ) : (
-              <Image
-                source={{ uri: image }}
-                style={{
-                  height: imageWidth,
-                  width: imageWidth,
-                  borderWidth: 3,
-                  borderColor: theme.colors.primaryColor,
-                  borderRadius: imageWidth / 2,
-                }}
-                resizeMode="cover"
-              />
-            )}
-          </View>
+          <DP color={ theme.colors.primaryColor} disabled image={image} />
         </View>
         <View style={styles.vc} />
       </View>
@@ -242,18 +221,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-end",
   },
-  image: {
-    width: imageWidth,
-    height: imageWidth,
-    borderRadius: imageWidth / 2,
-    overflow: "hidden",
-    backgroundColor: "#b1b1b1",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   userNameStyle: {
     fontSize: 17,
-    fontWeight: "bold",
+    fontFamily: "space-mano-bold",
     textTransform: "capitalize",
   },
   dateStyle: { color: "grey", fontSize: 15 },

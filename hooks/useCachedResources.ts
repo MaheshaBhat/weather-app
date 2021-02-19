@@ -17,6 +17,7 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          'space-mano-bold': require('../assets/fonts/SpaceMono-Bold.ttf')
         });
         await Asset.loadAsync([
           "./assets/images/humidity.png",
