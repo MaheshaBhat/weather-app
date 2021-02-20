@@ -28,7 +28,7 @@ import { normalize } from "../constants/Layout";
 export default function Navigation() {
   const { theme } = useContext<contextType>(AppContext);
   return (
-    <NavigationContainer linking={LinkingConfiguration} theme={theme}>
+    <NavigationContainer  theme={theme}>
       <TabNavigator />
     </NavigationContainer>
   );

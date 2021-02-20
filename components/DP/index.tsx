@@ -6,12 +6,12 @@ import {
   ColorValue,
   ViewStyle,
 } from "react-native";
-// import { useHeaderHeight } from "@react-navigation/stack";
+import { useHeaderHeight } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
 import layout, { normalize } from "../../constants/Layout";
 
-const imageWidth = normalize(100);
+// const imageWidth = normalize(100);
 
 interface Props {
   image: string;
@@ -28,8 +28,8 @@ export default function DP({
   disabled = false,
   dpStyle,
 }: Props) {
-  // const headHeight = useHeaderHeight();
-  // const imageWidth = (layout.window.height - headHeight) * 0.13;
+  const headHeight = useHeaderHeight();
+  const imageWidth = (layout.window.height - headHeight) * 0.13;
   return (
     <TouchableOpacity
       style={[
