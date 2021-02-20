@@ -13,12 +13,14 @@ import {
   Platform,
 } from "react-native";
 import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
 
 import { Text, View } from "../components/Themed";
 import Card from "../components/Card";
 import { AppContext, contextType } from "../context";
 import { getUVData, getWeatherData } from "../api-service";
 import DP from "../components/DP";
+
 
 const weatherData = [
   { name: "Humidity", index: 0, type: "humidity", color: "#6b29ff" },
@@ -79,7 +81,7 @@ export default function TabOneScreen() {
 
   const getPermission = useCallback(async () => {
     if (Platform.OS !== "web") {
-      const { status } = await Location.requestPermissionsAsync();
+      const { status } = await Permissions.askAsync(Permissions.LOCATION);
       if (status === "granted") {
         return true;
       }
@@ -97,7 +99,9 @@ export default function TabOneScreen() {
     }
     setErrorMsg("");
     try {
-      const tmpLocation = await Location.getCurrentPositionAsync({});
+      const tmpLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
       // setLocation(tmpLocation);
       Promise.all([getWeatherData(tmpLocation), getUVData(tmpLocation)])
         .then((res) => {

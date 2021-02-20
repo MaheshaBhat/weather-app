@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
 import {
   StyleSheet,
-  RefreshControl,
   Image,
-  FlatList,
   TouchableOpacity,
+  FlatList,
+  RefreshControl,
 } from "react-native";
 import * as Linking from "expo-linking";
 
@@ -35,7 +35,7 @@ export default function TabTwoScreen() {
         setFeeds(art);
         setRefreshing(false);
       })
-      .catch((er) => setError(er));
+      .catch((er) => setError("some thing went wrong"));
   }, [refreshing]);
 
   const renderItem = useCallback(
@@ -66,7 +66,12 @@ export default function TabTwoScreen() {
                 overflow: "visible",
               }}
             >
-              <View style={styles.titleStyle}>
+              <View
+                style={[
+                  styles.titleStyle,
+                  { backgroundColor: theme.colors.primaryColor + 40 },
+                ]}
+              >
                 <Text style={styles.title} numberOfLines={2}>
                   {title}
                 </Text>
@@ -94,13 +99,13 @@ export default function TabTwoScreen() {
         </>
       );
     },
-    [feeds.length, theme.dark]
+    [feeds.length, theme.colors.primaryColor, theme.dark]
   );
 
   if (error) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Something went wrong</Text>
+        <Text>{error}</Text>
       </View>
     );
   }
