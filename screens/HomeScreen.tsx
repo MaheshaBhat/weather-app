@@ -100,7 +100,7 @@ export default function TabOneScreen() {
     setErrorMsg("");
     try {
       const tmpLocation = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
+        accuracy: Location.Accuracy.Lowest,
       });
       // setLocation(tmpLocation);
       Promise.all([getWeatherData(tmpLocation), getUVData(tmpLocation)])
