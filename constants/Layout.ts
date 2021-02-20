@@ -10,7 +10,7 @@ export default {
   isSmallDevice: width < 411,
 };
 
-const scale = width / 320;
+const scale = width / 411;
 
 export function normalize(size: number) {
   const newSize = size * scale;
@@ -20,3 +20,5 @@ export function normalize(size: number) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
   }
 }
+
+

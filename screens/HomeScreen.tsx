@@ -10,6 +10,7 @@ import {
   ScrollView,
   RefreshControl,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import * as Location from "expo-location";
 
@@ -53,7 +54,6 @@ export default function TabOneScreen() {
   const [refreshing, setRefreshing] = useState<boolean>(true);
   // const [location, setLocation] = useState<Location.LocationObject>();
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [permission, setPermission] = useState(false);
   const [min, setMin] = useState(0);
   const [weather, setWeather] = useState({
     humidity: 0,
@@ -77,17 +77,27 @@ export default function TabOneScreen() {
     setRefreshing(true);
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (!refreshing) return;
-      setPermission(false);
-      setErrorMsg("");
+  const getPermission = useCallback(async () => {
+    if (Platform.OS !== "web") {
       const { status } = await Location.requestPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
+      if (status === "granted") {
+        return true;
       }
+      return false;
+    }
+  }, []);
 
+  const getData = useCallback(async () => {
+    if (!refreshing) return;
+    const perm = await getPermission();
+    console.log(perm);
+    if (!perm) {
+      setRefreshing(false);
+      setErrorMsg("Permission to access location was denied");
+      return;
+    }
+    setErrorMsg("");
+    try {
       const tmpLocation = await Location.getCurrentPositionAsync({});
       // setLocation(tmpLocation);
       Promise.all([getWeatherData(tmpLocation), getUVData(tmpLocation)])
@@ -100,19 +110,29 @@ export default function TabOneScreen() {
           setRefreshing(false);
           setErrorMsg(err.toString());
         });
-    })();
-  }, [refreshing, permission]);
+    } catch (e) {
+      setRefreshing(false);
+      setErrorMsg("Permission to access location was denied");
+    }
+  }, [getPermission, refreshing]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   if (errorMsg) {
     return (
-      <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <Text>{errorMsg}</Text>
-        {!permission && (
-          <TouchableOpacity onPress={() => setPermission(true)}>
-            <Text style={{ color: "blue" }}>Give Permission</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+        <TouchableOpacity onPress={onRefresh}>
+          <Text style={{ color: "#039be5" }}>please refresh</Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
   }
   return (
@@ -179,7 +199,7 @@ const styles = StyleSheet.create({
     flex: 15,
     flexDirection: "row",
     marginHorizontal: "5%",
-    marginVertical: '1%'
+    marginVertical: "1%",
   },
   subContainer: {
     flex: 85,
@@ -210,9 +230,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   userNameStyle: {
-    fontSize: 17,
+    fontSize: 19,
     fontFamily: "space-mano-bold",
     textTransform: "capitalize",
   },
-  dateStyle: { color: "grey", fontSize: 15 },
+  dateStyle: { color: "grey" },
 });

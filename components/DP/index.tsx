@@ -4,14 +4,14 @@ import {
   Image,
   StyleSheet,
   ColorValue,
-  ViewProps,
   ViewStyle,
 } from "react-native";
+// import { useHeaderHeight } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
-import { normalize } from "../../constants/Layout";
+import layout, { normalize } from "../../constants/Layout";
 
-const imageWidth = normalize(60);
+const imageWidth = normalize(100);
 
 interface Props {
   image: string;
@@ -28,9 +28,15 @@ export default function DP({
   disabled = false,
   dpStyle,
 }: Props) {
+  // const headHeight = useHeaderHeight();
+  // const imageWidth = (layout.window.height - headHeight) * 0.13;
   return (
     <TouchableOpacity
-      style={[styles.imageStyle, dpStyle]}
+      style={[
+        styles.imageStyle,
+        dpStyle,
+        { height: imageWidth, width: imageWidth, borderRadius: imageWidth / 2 },
+      ]}
       disabled={disabled}
       onPress={onPress}
     >
@@ -43,7 +49,14 @@ export default function DP({
       ) : (
         <Image
           source={{ uri: image }}
-          style={styles.image}
+          style={[
+            styles.image,
+            {
+              height: imageWidth,
+              width: imageWidth,
+              borderRadius: imageWidth / 2,
+            },
+          ]}
           resizeMode="cover"
         />
       )}
@@ -53,18 +66,12 @@ export default function DP({
 
 const styles = StyleSheet.create({
   imageStyle: {
-    width: imageWidth,
-    height: imageWidth,
-    borderRadius: imageWidth / 2,
     overflow: "hidden",
     backgroundColor: "#b1b1b1",
     justifyContent: "center",
     alignItems: "center",
   },
   image: {
-    height: imageWidth,
-    width: imageWidth,
     borderWidth: 3,
-    borderRadius: imageWidth / 2,
   },
 });

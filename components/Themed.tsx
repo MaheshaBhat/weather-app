@@ -18,7 +18,7 @@ export function Text(props: TextProps) {
   const { style, ...otherProps } = props;
   const color = theme.colors.text;
   const newStyle = Object.assign((style as any) ?? {});
-  const fontSize = normalize(newStyle?.fontSize ?? 14);
+  const fontSize = normalize(newStyle?.fontSize ?? 16);
 
   return (
     <DefaultText

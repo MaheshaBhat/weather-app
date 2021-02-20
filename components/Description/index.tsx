@@ -9,7 +9,7 @@ export default function Description({ description }: { description: string }) {
   return (
     <>
       <View style={styles.descriptionStyle}>
-        <Text style={{ fontSize: 14 }} numberOfLines={readMore ? 5 : undefined}>
+        <Text numberOfLines={readMore ? 5 : undefined}>
           {description}
         </Text>
       </View>

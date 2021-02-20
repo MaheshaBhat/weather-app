@@ -99,7 +99,7 @@ export default function TabTwoScreen() {
 
   if (error) {
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Something went wrong</Text>
       </View>
     );
@@ -132,10 +132,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff90",
     paddingHorizontal: "4%",
     paddingVertical: "2%",
-    width: '100%'
+    width: "100%",
   },
   title: {
-    fontSize: 15,
+    fontSize: 17,
     fontFamily: "space-mano-bold",
   },
   imageStyle: {

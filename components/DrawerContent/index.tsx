@@ -42,10 +42,10 @@ export default function DrawerContent(Props: any) {
       const {
         status,
       } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        return false;
+      if (status === "granted") {
+        return true;
       }
-      return true;
+      return false;
     }
   }, []);
 
@@ -117,7 +117,7 @@ export default function DrawerContent(Props: any) {
                 onPress={deleteImage}
                 touchStyle={{ width: "20%" }}
                 name={"trash"}
-                size={20}
+                size={25}
                 color={theme.colors.primaryColor}
               />
               <DP
@@ -130,7 +130,7 @@ export default function DrawerContent(Props: any) {
                 onPress={saveImage}
                 touchStyle={{ width: "20%", paddingLeft: "10%" }}
                 name={isSave ? "save" : "pencil"}
-                size={20}
+                size={25}
                 color={theme.colors.primaryColor}
               />
             </View>
@@ -142,7 +142,7 @@ export default function DrawerContent(Props: any) {
                   value={name}
                 />
               ) : (
-                <Text numberOfLines={1}>
+                <Text numberOfLines={1} style={styles.textStyle}>
                   {userName || "Please Enter your name"}
                 </Text>
               )}
@@ -150,7 +150,7 @@ export default function DrawerContent(Props: any) {
                 onPress={saveUsername}
                 touchStyle={{ width: "20%", paddingLeft: 5 }}
                 name={type ? "save" : "pencil"}
-                size={20}
+                size={25}
                 color={theme.colors.primaryColor}
               />
             </View>
@@ -164,9 +164,13 @@ export default function DrawerContent(Props: any) {
               }}
             >
               <Text
-                style={{
-                  color: active === "Home" ? theme.colors.primaryColor : "grey",
-                }}
+                style={[
+                  styles.textStyle,
+                  {
+                    color:
+                      active === "Home" ? theme.colors.primaryColor : "grey",
+                  },
+                ]}
               >
                 Home
               </Text>
@@ -179,10 +183,13 @@ export default function DrawerContent(Props: any) {
               }}
             >
               <Text
-                style={{
-                  color:
-                    active === "Browse" ? theme.colors.primaryColor : "grey",
-                }}
+                style={[
+                  styles.textStyle,
+                  {
+                    color:
+                      active === "Browse" ? theme.colors.primaryColor : "grey",
+                  },
+                ]}
               >
                 Browse
               </Text>
@@ -195,10 +202,13 @@ export default function DrawerContent(Props: any) {
               }}
             >
               <Text
-                style={{
-                  color:
-                    active === "Theme" ? theme.colors.primaryColor : "grey",
-                }}
+                style={[
+                  styles.textStyle,
+                  {
+                    color:
+                      active === "Theme" ? theme.colors.primaryColor : "grey",
+                  },
+                ]}
               >
                 Change Theme
               </Text>
@@ -245,5 +255,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  textStyle: {
+    fontSize: 17,
+    fontFamily: "space-mano-bold",
   },
 });

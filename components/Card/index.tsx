@@ -39,7 +39,7 @@ export default function Card({ cardStyle, obj, value, min }: Props) {
               marginBottom: "5%",
             }}
           />
-          <Text style={[styles.textStyle, { fontWeight: "bold" }]}>
+          <Text style={[styles.textStyle, { fontFamily: "space-mano-bold" }]}>
             {obj.name}
           </Text>
         </View>
@@ -49,11 +49,7 @@ export default function Card({ cardStyle, obj, value, min }: Props) {
           </View>
         )}
         <View style={styles.dataContainer}>
-          <Text
-            style={[styles.textStyle, { fontSize: 32, fontFamily: "space-mano-bold" }]}
-          >
-            {value}
-          </Text>
+          <Text style={styles.valueStyle}>{value}</Text>
           <Text style={styles.textStyle}>{`${min} minutes ago`}</Text>
         </View>
       </View>
@@ -86,6 +82,6 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "#fff",
-    fontSize: 15,
   },
+  valueStyle: { fontSize: 32, fontFamily: "space-mano-bold", color: "#fff" },
 });
