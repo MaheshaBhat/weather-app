@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerContainer: {
-    flex: 15,
+    flex: 20,
     flexDirection: "row",
     marginHorizontal: "5%",
     marginVertical: "1%",
   },
   subContainer: {
-    flex: 85,
+    flex: 80,
     flexDirection: "row",
     marginHorizontal: "2.5%",
   },
