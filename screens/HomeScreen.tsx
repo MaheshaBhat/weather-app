@@ -115,7 +115,7 @@ export default function TabOneScreen() {
         });
     } catch (e) {
       setRefreshing(false);
-      setErrorMsg("Permission to access location was denied");
+      setErrorMsg(e.toString());
     }
   }, [getPermission, refreshing]);
 
