@@ -90,7 +90,6 @@ export default function TabOneScreen() {
   const getData = useCallback(async () => {
     if (!refreshing) return;
     const perm = await getPermission();
-    console.log(perm);
     if (!perm) {
       setRefreshing(false);
       setErrorMsg("Permission to access location was denied");
